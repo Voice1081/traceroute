@@ -44,14 +44,19 @@ def make_table(result):
 
 
 def traceroute(addr):
-    table = make_table(get_info(get_traceroute(addr)))
+    info = get_info(get_traceroute(addr))
+    if len(info) == 0:
+        print('Address is incorrect')
+        return
+    table = make_table(info)
+    print(table.get_string())
     with open('{} traceroute.txt'.format(addr), 'w') as f:
         f.write(table.get_string())
 
 
 def internet_on():
     try:
-        urlopen('google.com', timeout=5)
+        urlopen('http://www.google.com', timeout=5)
         return True
     except URLError:
         return False
@@ -68,4 +73,4 @@ def main():
 
 
 if __name__ == '__main__':
-    traceroute()
+    main()
